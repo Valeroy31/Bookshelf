@@ -1,0 +1,21 @@
+.alert-span{
+    font-size: 1.6rem;
+    color: var(--color-bg-white);
+    font-weight: 600;
+
+
+}
+.alert-span a{
+    color: var(--color-highlight);
+}
+.top-banner{
+    background-color: var(--color-navy);
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+@media (max-width: 770px){
+    .top-banner{
+        display: none;
+    }
+}

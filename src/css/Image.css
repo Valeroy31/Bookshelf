@@ -1,0 +1,11 @@
+.img-5{
+      padding: 0 3.6em 3.6em 3.2em;
+width: 95%;
+  max-width: 1440px;
+  margin: auto;
+  display: flex;
+       box-shadow: var(--color-link-soft) .5px 4px 30px 4px ;
+}
+.all-section-5{
+      margin-bottom: 8rem;
+}

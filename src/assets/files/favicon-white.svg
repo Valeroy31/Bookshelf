@@ -1,0 +1,20 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bookshelf favicon">
+  <title>Bookshelf</title>
+  <rect width="64" height="64" rx="14" fill="#FFFFFF" stroke="#E2E4EF" stroke-width="1"/>
+  <!-- Left page -->
+  <path d="M 8 12 C 8 8 11 6 15 6 L 30 6 L 30 58 L 15 58 C 11 58 8 55 8 51 Z" fill="#EDE9F8" stroke="#6947B5" stroke-width="1.5"/>
+  <!-- Right page -->
+  <path d="M 56 12 C 56 8 53 6 49 6 L 34 6 L 34 58 L 49 58 C 53 58 56 55 56 51 Z" fill="#F3F1FC" stroke="#6947B5" stroke-width="1.5"/>
+  <!-- Spine -->
+  <rect x="29" y="6" width="6" height="52" fill="#D6CCF0"/>
+  <!-- Text lines left page -->
+  <line x1="14" y1="22" x2="27" y2="22" stroke="#A090D4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="14" y1="30" x2="27" y2="30" stroke="#A090D4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="14" y1="38" x2="23" y2="38" stroke="#A090D4" stroke-width="2" stroke-linecap="round"/>
+  <!-- Text lines right page -->
+  <line x1="37" y1="22" x2="50" y2="22" stroke="#A090D4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="37" y1="30" x2="50" y2="30" stroke="#A090D4" stroke-width="2" stroke-linecap="round"/>
+  <line x1="37" y1="38" x2="47" y2="38" stroke="#A090D4" stroke-width="2" stroke-linecap="round"/>
+  <!-- Bookmark -->
+  <path d="M 44 6 L 53 6 L 53 20 L 48.5 17 L 44 20 Z" fill="#FBBF24"/>
+</svg>

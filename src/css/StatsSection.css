@@ -1,0 +1,144 @@
+.header h2{
+    font-size: 3.6rem;
+    width: 50%;
+    padding-bottom: 3rem;
+    margin: auto;
+     justify-self: center;
+    text-align: center;
+    color: var(--color-text-primary)
+}
+.stats-text{
+    display: flex;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.icons-stats {
+  position: relative;
+}
+.child-icon-stats {
+  position: absolute;
+  bottom: 2.4rem;
+  left: 1.98rem;
+}
+h4{
+    font-size: 4rem;
+    justify-self: center;
+    text-align: center;
+    color: var(--color-primary) ;
+}
+small{
+    color: var(--color-text-nav);
+    font-size: 1.6rem;
+    font-weight: 500;
+    
+}
+.header{
+      padding: 0 1.8em 0 1.6em;
+    display: flex;
+    position: relative;
+    padding-top: 5rem;
+    flex-direction: column;
+    gap: 3rem;
+   
+}
+
+.svg-1-1{
+    position: absolute;
+    z-index: -99;
+    left: 7rem;
+    top: 10rem;
+    
+}
+.svg-1-1-1{
+    position: absolute;
+    z-index: -99;
+    right: 3rem;
+    bottom: 15rem;
+    
+}
+.stats{
+    padding-top: 1rem;
+    display: grid;
+    justify-items: center;
+        position: relative;
+    grid-template-columns: repeat(3, 1fr);
+     
+}
+.card-2{
+    display: none;
+}
+.header span{
+    padding-bottom: .2rem;
+    background-image: url('../../assets/files/underline-stroke.svg');
+    background-repeat: no-repeat;
+    background-position: bottom;
+    
+}
+.before{
+    height: 2px;
+    width: 98%;
+    margin: auto;
+    background-color: var(--color-link-soft)
+}
+@media (max-width: 1000px) {
+.svg-1-1{
+display: none;
+}
+.svg-1-1-1{
+    display: none
+    
+}
+.header h2{
+  width: 100%;
+  padding-bottom: 1rem;
+}
+}
+
+@media (max-width: 650px) {
+    .zigzag{
+        display: none;
+    }
+    .card-2{
+        display: block;
+    }
+    .card{
+        display: none;
+    }
+}
+
+@media (max-width: 450px) {
+    .card-2{
+        display: block;
+    }
+    .header{
+        padding-top: 0;
+    }
+   .header h2, .header svg{
+  display: none;
+    
+}
+    .card-2 h4{
+        font-size: 3.2rem;
+    }
+    .card{
+        display: none;
+    }
+}
+
+@media (max-width: 300px) {
+.stats{
+    gap: 2rem;
+    align-items: center;
+    grid-template-columns: none
+     
+}
+.card-2{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-direction: row;
+}
+
+}

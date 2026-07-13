@@ -1,0 +1,251 @@
+.all-form {
+  display: flex;
+  width: 100%;
+  background-color: var(--color-primary-deep);
+  margin: 0px auto;
+}
+p {
+  font-size: 1.6rem;
+  color: var(--color-text-primary);
+}
+.form {
+  background-color: var(--color-bg-white);
+  padding: 4rem 4.8rem;
+  scroll-behavior: smooth;
+  width: 38%;
+}
+
+.form-img {
+  background-color: var(--color-primary-deep);
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 62%;
+}
+.form-img-text {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  padding-top: 2rem;
+  gap: 1.2rem;
+  width: 85%;
+    color: var(--color-bg-white);
+
+}
+.form-img-text h2{
+    font-size: 2.4rem;
+    font-weight: 600;
+}
+.form-img-text p{
+  color: var(--color-bg-white);
+  font-size: 1.8rem;
+}
+.form-img img {
+  width: 60%;
+  max-width: 600px;
+  min-width: 528px;
+}
+.form-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.2rem;
+}
+.form-header p {
+  margin-bottom: 2rem;
+}
+img {
+  width: 200px;
+}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.6rem;
+  width: 100%;
+}
+.form-field span {
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+}
+.google-signup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.8rem;
+  text-wrap: nowrap !important;
+  background-color: var(--color-bg-white);
+  border: 1px solid var(--color-text-primary);
+  box-shadow: #c3ceef 0px 4px 8px;
+  padding: 0.8em 1em;
+  border-radius: 8px;
+  color: var(--color-navy);
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.google-signup:hover {
+  background-color: #c7d2ef25;
+  transition: ease 0.5s;
+  box-shadow: #b9c7ee 0px 4px 8px;
+}
+.google-signup :disabled, :disabled:hover {
+  background-color: rgba(255, 255, 255, 0.438);
+   cursor: not-allowed;
+}
+.google-signup img {
+  width: 3rem;
+}
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 2rem;
+  margin-top: 4rem;
+}
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(169, 166, 189, 0.6);
+}
+.divider::before {
+  margin-right: 2rem;
+}
+.divider::after {
+  margin-left: 2rem;
+}
+
+.form-field input {
+  padding: 1.4rem;
+  line-height: 160%;
+  border: 1px solid var(--color-input-border);
+  border-radius: 8px;
+  box-shadow: rgba(96, 79, 205, 0.069) 5px 5px 5px;
+}
+.form-field input::placeholder {
+  font-size: 1.6rem;
+  color: var(--color-input-placeholder);
+}
+.form-field input:focus {
+  outline: none;
+  border: 1px solid var(--color-link);
+  box-shadow: rgba(46, 86, 232, 0.073) 2px 2px 2px 2px;
+}
+.form-field:focus-within {
+  span {
+    color: var(--color-link);
+  }
+}
+.cta {
+  gap: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+}
+.cta p {
+  color: var(--color-text-muted);
+  text-align: center;
+}
+.message{
+  margin-bottom: 1.6rem;
+}
+.message span{
+  font-weight: 500;
+}
+a {
+  text-decoration: none;
+  color: var(--color-link);
+  font-weight: 500;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 22px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-primary-deep);
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}
+
+@media(width <= 1023px){
+    .all-form{
+        justify-content: center;
+    }
+    .form-img{
+        display: none;
+
+    }
+    .form{
+      width: 56%;
+        max-width: 60%;
+       
+       
+    }
+}
+
+@media(width <= 770px){
+    .all-form{
+        background-color: var(--color-bg-white);
+    }
+    .form{
+         min-width: 500px;
+    }
+    .cta{
+        padding-bottom: 6rem;
+    }
+}
+@media(width <= 515px){
+    .form{
+         min-width: 100%;
+         padding: 4.8rem;
+    }
+}
+
+@media(width <= 350px){
+    .form{
+         min-width: 100%;
+         padding: 4.8rem;
+    }
+
+    .form-header img{
+        width: 150px;
+    }
+    .google-signup img{
+        width: 2.4rem;;
+    }
+    .google-signup{
+        font-size: 1.2rem;
+    }
+    .form-field input::placeholder{
+        font-size: 1.2rem;
+    }
+
+.form p{
+    font-size: 1.4rem;
+}
+}
