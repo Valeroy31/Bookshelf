@@ -1,24 +1,24 @@
-import { selectPostIds, getPostsError, getPostsStatus } from "./postSlice";
-
 import { useSelector } from "react-redux";
 
 import PostsExcerpt from "./PostsExcerpt";
 import PostsHeader from "./PostsHeader";
 import "../../css/Posts.css";
+import { selectPostIds, useGetPostsQuery } from "./postSlice";
 
 const PostList = () => {
-  const sortPosts = useSelector(selectPostIds);
-  const postsStatus = useSelector(getPostsStatus);
-  const error = useSelector(getPostsError);
-
+ // use selectPostIds
+  //because initialState is now normalized and more optimized to look up
+  //posts using assigned ids
+  const sortPosts = useSelector(selectPostIds)
+  const {isLoading, isError, isSuccess, error} = useGetPostsQuery()
   let content;
-  if (postsStatus === "loading") {
+  if (isLoading) {
     content = (
       <div className="posts-state">
         <div className="loader"></div>
       </div>
     );
-  } else if (postsStatus === "succeeded") {
+  } else if (isSuccess) {
     content = (
       <section className="posts-grid">
         {sortPosts.map((postId) => (
@@ -26,7 +26,7 @@ const PostList = () => {
         ))}
       </section>
     );
-  } else if (postsStatus === "failed") {
+  } else if (isError) {
     content = (
       <div className="posts-state">
         <p className="posts-error">{error}</p>
@@ -41,7 +41,7 @@ const PostList = () => {
       <div className="posts-page">
         <div className="posts-page__head">
           <h1 className="posts-page__title">Posts</h1>
-          {postsStatus === "succeeded" && (
+          {isSuccess && (
             <span className="posts-page__count">
               {sortPosts.length} {sortPosts.length === 1 ? "post" : "posts"}
             </span>
