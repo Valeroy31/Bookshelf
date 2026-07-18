@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import { reactionAdded } from "./postSlice";
 import "../../css/Posts.css";
 
 const Reactions = ({ post }) => {

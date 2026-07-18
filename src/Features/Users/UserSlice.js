@@ -1,36 +1,42 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createEntityAdapter, createSelector } from "@reduxjs/toolkit"
+import { apiSlice } from "../Api/apiSlice"
 
-const USER_URL = 'https://jsonplaceholder.typicode.com/users'
-const initialState = [
+const userAdapter = createEntityAdapter()
 
-]
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-    try {
-        const response = await axios.get(USER_URL)
-        
-        return [...response.data]
-        
-        
+const initialState = userAdapter.getInitialState()
 
-    } catch (error) {
-        return error?.message
-    }
-})
-export const userSlice = createSlice({
-    name: 'users',
-    initialState,
-    reducers: {},
-    extraReducers(builder) {
-        builder
-            .addCase(fetchUsers.fulfilled, (state, action) => {
-                return action.payload //replace the state array entirely with the API response
-            })
-    }
+export const extendedApiUserSlice = apiSlice.injectEndpoints({
+    endpoints: (builder)=>({
+        getUsers: builder.query({
+            query: ()=> 'users',
+            transformResponse: (responseData)=>{
+               return userAdapter.setAll(initialState,responseData)
+            },
+            
+            providesTags: (result)=>
+                result ? [
+                {type: 'Posts', id: 'LIST'},
+                ...result.ids.map(id => ({type: 'Posts', id}))
+                
+            ] : {type: 'Posts', id: 'LIST'}
+            
+        })
+    })
 })
 
-export default userSlice.reducer
-export const selectAllUsers = (state) => state.users
-export const selectUserById = (state, id) => state.users.find(user => user.id === Number(id))
+export const {useGetUsersQuery} = extendedApiUserSlice
+
+const selectUserResult = extendedApiUserSlice.endpoints.getUsers.select()
+
+export const userResult = createSelector(
+    selectUserResult,
+    userResult => userResult.data
+)
+
+       export const {
+        selectAll,
+        selectIds: selectAllUsers,
+        selectById: selectUserById
+       } = userAdapter.getSelectors( (state)=> userResult(state) ?? initialState)
 
 

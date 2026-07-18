@@ -1,16 +1,17 @@
 import { useSelector } from "react-redux"
-import { selectAllUsers } from "../Users/UserSlice"
 import { Link } from "react-router-dom"
+import { selectUserById } from "../Users/UserSlice"
 
 
 const PostAuthor = ({userId}) => {
-      const users = useSelector(selectAllUsers)
-      const userName = users.find(user => user.id === userId)
+      const users = useSelector((state)=>selectUserById(state,userId))
+    
+      // const userName = users.find(user => user.id === userId)
       ;
       
   return (
     <>
-    <Link to={`/user/${userId}`}>{userName ? <i style={{ marginTop: '10px', fontSize: '1.6rem' }}>by {userName.name}  </i> : <p style={{ marginTop: '10px', fontStyle: 'italic', color: '#718096' }}>by Unknown Author</p>}</Link>
+    <Link to={`/users/${userId}`}>{users ? <i style={{ marginTop: '10px', fontSize: '1.6rem' }}>by {users.name}  </i> : <p style={{ marginTop: '10px', fontStyle: 'italic', color: '#718096' }}>by Unknown Author</p>}</Link>
    </>
   )
 }

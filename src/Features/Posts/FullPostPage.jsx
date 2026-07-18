@@ -8,7 +8,7 @@ import PostsHeader from "./PostsHeader"
 
 const FullPostPage = () => {
   const { id } = useParams()
-  const foundPost = useSelector((state) => selectPostById(state, Number(id)))
+  const foundPost = useSelector((state) => selectPostById(state,id))
  
   
 

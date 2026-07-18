@@ -1,26 +1,31 @@
-import { useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom"
-import { selectUserById } from "./UserSlice"
-import { selectUserPosts } from "../Posts/postSlice"
-import PostsHeader from "../Posts/PostsHeader"
-import "../../css/Users.css"
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { selectUserById } from "./UserSlice";
+import PostsHeader from "../Posts/PostsHeader";
+import "../../css/Users.css";
+import { useGetPostsByUserIdQuery } from "../Posts/postSlice";
 
-const getInitials = (name = '')=>
-    name.split(" ")
-    .map((part)=>part[0])
+const getInitials = (name = "") =>
+  name
+    .split(" ")
+    .map((part) => part[0])
     .filter(Boolean)
     .slice(0, 2)
-    .join('')
-    .toUpperCase()
-
-
+    .join("")
+    .toUpperCase();
 
 const UserPage = () => {
-  const { id } = useParams()
-   const user = useSelector((state) => selectUserById(state, id))
-  const userPosts = useSelector(state=>selectUserPosts(state, id))
-   // const posts = useSelector(selectAllPosts)
+  const { id } = useParams();
+  const user = useSelector((state) => selectUserById(state, id));
+ const {data: userPosts,
+    isLoading,
+    isError,
+    isSuccess,
+    error
+ } =  useGetPostsByUserIdQuery(id)
+  // const posts = useSelector(selectAllPosts)
   // const userPosts = posts.filter((post) => post.userId === user.id)
+let content;
 
   if (!user) {
     return (
@@ -36,9 +41,60 @@ const UserPage = () => {
           </Link>
         </div>
       </>
-    )
+    );
   }
 
+
+  
+  
+  if (isLoading) {
+    content = (
+      <div className="posts-state">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+  else if (isSuccess) {
+    const {ids, entities} = userPosts
+    
+    content =  userPosts.ids.length > 0 ? (
+            <div className="user-posts__head">
+            <h2 className="user-posts__title">Posts</h2>
+            <span className="user-posts__count">
+              {userPosts.ids.length} {userPosts.ids.length === 1 ? "post" : "posts"}
+            </span>
+             <ul className="user-posts__list">
+              {ids.map((id) => (
+                <li key={id} className="user-post-item">
+                  <Link
+                    to={`/posts/${id}`}
+                    className="user-post-item__link"
+                  >
+                    {entities[id].title}
+                    <span className="user-post-item__arrow" aria-hidden="true">
+                      →
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          ) : (
+            <p className="users-empty">
+              {user.name} hasn&apos;t written any posts yet.
+            </p>
+          )
+    
+   
+  }
+  else if (isError) {
+     content = (
+      <div className="posts-state">
+        <p className="posts-error">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -61,9 +117,7 @@ const UserPage = () => {
                   ✉️ {user.email}
                 </a>
               )}
-              {user.phone && (
-                <span className="user-chip">📞 {user.phone}</span>
-              )}
+              {user.phone && <span className="user-chip">📞 {user.phone}</span>}
               {user.website && (
                 <a
                   className="user-chip"
@@ -85,35 +139,11 @@ const UserPage = () => {
         </header>
 
         <section className="user-posts">
-          <div className="user-posts__head">
-            <h2 className="user-posts__title">Posts</h2>
-            <span className="user-posts__count">
-              {userPosts.length} {userPosts.length === 1 ? "post" : "posts"}
-            </span>
-          </div>
-
-          {userPosts.length > 0 ? (
-            <ul className="user-posts__list">
-              {userPosts.map((post) => (
-                <li key={post.id} className="user-post-item">
-                  <Link to={`/posts/${post.id}`} className="user-post-item__link">
-                    {post.title}
-                    <span className="user-post-item__arrow" aria-hidden="true">
-                      →
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="users-empty">
-              {user.name} hasn&apos;t written any posts yet.
-            </p>
-          )}
+          {content}
         </section>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default UserPage
+export default UserPage;
