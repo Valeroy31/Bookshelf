@@ -15,10 +15,10 @@ export const extendedApiUserSlice = apiSlice.injectEndpoints({
             
             providesTags: (result)=>
                 result ? [
-                {type: 'Posts', id: 'LIST'},
-                ...result.ids.map(id => ({type: 'Posts', id}))
+                {type: 'User', id: 'LIST'},
+                ...result.ids.map(id => ({type: 'User', id}))
                 
-            ] : {type: 'Posts', id: 'LIST'}
+            ] : [{type: 'User', id: 'LIST'}]
             
         })
     })
@@ -30,7 +30,7 @@ const selectUserResult = extendedApiUserSlice.endpoints.getUsers.select()
 
 export const userResult = createSelector(
     selectUserResult,
-    userResult => userResult.data
+    userResult => userResult.data ?? initialState
 )
 
        export const {

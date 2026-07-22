@@ -26,17 +26,18 @@ const App = () => {
         <Route path="/auth">
           <Route path="users/sign_up" element={<Signup />} />
           <Route path="users/login" element={<Login />} />
-            <Route path="/auth/callback" element={<Callback />} />
+          <Route path="/auth/callback" element={<Callback />} />
         </Route>
 
-      
         <Route path="/counter" element={<Counter />} />
-        <Route path="/posts" element={<PostList />}/>
-        <Route path="/postAuthors" element={<AllUsers />}/>
-        <Route path="/users/:id" element={<UserPage />}/>
-        <Route path= '/posts/addPost' element= {<AddPostForm/>}/>
-        <Route path= 'posts/:id' element= {<FullPostPage/>} />
-        <Route path= 'editPost/:id' element= {<EditPostForm/>} />
+
+        <Route path="posts" element={<PostList />}>
+          <Route path="/postAuthors" element={<AllUsers />} />
+          <Route path="/users/:id" element={<UserPage />} />
+          <Route path="/posts/addPost" element={<AddPostForm />} />
+          <Route path="posts/:id" element={<FullPostPage />} />
+          <Route path="editPost/:id" element={<EditPostForm />} />
+        </Route>
 
         <Route
           path="/dashboard"

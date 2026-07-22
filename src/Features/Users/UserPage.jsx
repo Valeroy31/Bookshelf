@@ -8,7 +8,7 @@ import { useGetPostsByUserIdQuery } from "../Posts/postSlice";
 const getInitials = (name = "") =>
   name
     .split(" ")
-    .map((part) => part[0])
+    .map((char) => char[0])
     .filter(Boolean)
     .slice(0, 2)
     .join("")
@@ -18,7 +18,7 @@ const UserPage = () => {
   const { id } = useParams();
   const user = useSelector((state) => selectUserById(state, id));
  const {data: userPosts,
-    isLoading,
+    isFetching,
     isError,
     isSuccess,
     error
@@ -47,7 +47,7 @@ let content;
 
   
   
-  if (isLoading) {
+  if (isFetching) {
     content = (
       <div className="posts-state">
         <div className="loader"></div>

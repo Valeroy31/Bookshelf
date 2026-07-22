@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux"
-import { selectAllUsers } from "./UserSlice"
+
 import { Link } from "react-router-dom"
 import PostsHeader from "../Posts/PostsHeader"
 import "../../css/Users.css"
+import { useGetUsersQuery } from "./UserSlice"
 
 const getInitials = (name = "") =>
   name
@@ -14,13 +14,30 @@ const getInitials = (name = "") =>
     .toUpperCase()
 
 const AllUsers = () => {
-  const users = useSelector(selectAllUsers)
+ const {data: users, isLoading, isSuccess, isError, error} = useGetUsersQuery()
+  const {ids, entities} = users || {}
+  let content;
 
-  return (
-    <>
-      <PostsHeader />
-      <div className="users-page">
-        <div className="users-page__head">
+  if (isLoading) {
+     content = (
+      <div className="posts-state">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+  else if (isError){
+    content = (
+       <div className="posts-state">
+        <p className="posts-error">Caught error: {error.error}</p>
+        
+      </div>
+    )
+  }
+  else if (isSuccess) {
+content = (
+       <div className="users-page">
+    
+ <div className="users-page__head">
           <div>
             <h1 className="users-page__title">Authors</h1>
             <p className="users-page__subtitle">
@@ -28,39 +45,39 @@ const AllUsers = () => {
             </p>
           </div>
           <span className="users-page__count">
-            {users.length} {users.length === 1 ? "author" : "authors"}
+            {ids.length} {ids.length === 1 ? "author" : "authors"}
           </span>
         </div>
 
         <ul className="users-grid">
-          {users.map((user) => (
-            <li key={user.id}>
-              <Link to={`/users/${user.id}`} className="user-card">
+          {ids.map((id) => (
+            <li key={id}>
+              <Link to={`/users/${id}`} className="user-card">
                 <div className="user-card__top">
                   <span className="user-avatar" aria-hidden="true">
-                    {getInitials(user.name)}
+                    {getInitials(entities[id]?.name)}
                   </span>
                   <div className="user-card__info">
-                    <p className="user-card__name">{user.name}</p>
-                    <p className="user-card__username">@{user.username}</p>
+                    <p className="user-card__name">{entities[id]?.name}</p>
+                    <p className="user-card__username">@{entities[id]?.username}</p>
                   </div>
                 </div>
 
                 <div className="user-card__meta">
-                  {user.email && (
+                  {entities[id]?.email && (
                     <span className="user-card__meta-row">
                       <span className="user-card__meta-icon" aria-hidden="true">
                         ✉️
                       </span>
-                      {user.email}
+                      {entities[id]?.email}
                     </span>
                   )}
-                  {user.company?.name && (
+                  {entities[id]?.company?.name && (
                     <span className="user-card__meta-row">
                       <span className="user-card__meta-icon" aria-hidden="true">
                         🏢
                       </span>
-                      {user.company.name}
+                      {entities[id]?.company.name}
                     </span>
                   )}
                 </div>
@@ -71,6 +88,13 @@ const AllUsers = () => {
           ))}
         </ul>
       </div>
+)
+  }
+  return (
+    <>
+      <PostsHeader />
+         {content}
+ 
     </>
   )
 }

@@ -35,7 +35,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
               { type: "Post", id: "LIST" },
               ...result.ids.map((id) => ({ type: "Post", id })),
             ]
-          : { type: "Post", id: "LIST" },
+          : [{ type: "Post", id: "LIST" }],
       
     }),
     getPostsByUserId: builder.query({
@@ -60,7 +60,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       providesTags: (result) =>
         result
           ? [...result.ids.map((id) => ({ type: "Post", id }))]
-          : { type: "Post", id: "LIST" }
+          : [{ type: "Post", id: "LIST" }]
     }),
 
     addNewPost: builder.mutation({
@@ -102,11 +102,33 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Post", id: arg.id }],
     }),
+   addReaction: builder.mutation({
+    query: ({postId, reactions})=>({
+      url: `posts/${postId}`,
+      method: 'PATCH',
+      body: {reactions}
+    }),
+    async onQueryStarted({postId, reactions}, {dispatch, queryFulfilled}){
+      const patchResult = dispatch(
+        extendedApiSlice.util.updateQueryData('getPosts', undefined, draft =>{
+           //get the post from the duplicated draft data where the id is equal to the postId
+            const post = draft.entities[postId]
+            if(post) post.reactions = reactions
+        })
+      )
+      try {
+        await queryFulfilled
+      } catch {
+        patchResult.undo()
+      }
+    }
+   })
   }),
 });
 
 export const {
   useGetPostsQuery,
+  useAddReactionMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
   useAddNewPostMutation,
@@ -136,9 +158,25 @@ export const {
 
 // export const selectPostId =(state, id)=> state.posts.posts.find(post => post.id === Number(id))
 
-// reactionAdded: (state, action) => {
-//   const { postId, reaction } = action.payload;
-//   const existingPost = state.entities[postId]
-//   // const existingPost = state.posts.find((post) => post.id === postId);
-//   if (existingPost) existingPost.reactions[reaction]++;
-// }
+  // addReaction: builder.mutation({
+  //           query: ({postId, reaction})=>({
+  //               url: `post/${postId}`,
+  //               method: 'POST',
+  //               body: {reaction}
+  //           }),
+  //         async onQueryStarted({postId, reaction}, {dispatch, queryFulfilled}) {
+  //             const patchResult = dispatch (
+  //              extendedApiSlice.util.updateQueryData('getPosts', undefined, draft =>{
+  //                
+  //                 const post = draft.entities[postId]
+  //                 if (post) post.reactions[reaction]++
+  //               })
+                
+  //             )
+  //             try {
+  //                 await queryFulfilled
+  //               } catch (error) {
+  //                 patchResult.undo()
+  //               }
+  //         }
+  //       })

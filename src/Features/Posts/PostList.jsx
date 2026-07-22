@@ -10,9 +10,9 @@ const PostList = () => {
   //because initialState is now normalized and more optimized to look up
   //posts using assigned ids
   const sortPosts = useSelector(selectPostIds)
-  const {isLoading, isError, isSuccess, error} = useGetPostsQuery()
+  const {isFetching, isError, isSuccess, error} = useGetPostsQuery()
   let content;
-  if (isLoading) {
+  if (isFetching) {
     content = (
       <div className="posts-state">
         <div className="loader"></div>
@@ -27,9 +27,11 @@ const PostList = () => {
       </section>
     );
   } else if (isError) {
+    
     content = (
-      <div className="posts-state">
-        <p className="posts-error">{error}</p>
+            <div className="posts-state">
+        <p className="posts-error">Caught error: {error.error}</p>
+        
       </div>
     );
   }
