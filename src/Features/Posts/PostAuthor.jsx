@@ -11,7 +11,7 @@ const PostAuthor = ({userId}) => {
       
   return (
     <>
-    <Link to={`/users/${userId}`}>{users ? <i style={{ marginTop: '10px', fontSize: '1.6rem' }}>by {users.name}  </i> : <p style={{ marginTop: '10px', fontStyle: 'italic', color: '#718096' }}>by Unknown Author</p>}</Link>
+    <Link to={`/author/${userId}`}>{users ? <i style={{ marginTop: '10px', fontSize: '1.6rem' }}>by {users.name}  </i> : <p style={{ marginTop: '10px', fontStyle: 'italic', color: '#718096' }}>by Unknown Author</p>}</Link>
    </>
   )
 }

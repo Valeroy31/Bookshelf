@@ -8,7 +8,7 @@ const initialState = userAdapter.getInitialState()
 export const extendedApiUserSlice = apiSlice.injectEndpoints({
     endpoints: (builder)=>({
         getUsers: builder.query({
-            query: ()=> 'users',
+            query: ()=> 'authors',
             transformResponse: (responseData)=>{
                return userAdapter.setAll(initialState,responseData)
             },

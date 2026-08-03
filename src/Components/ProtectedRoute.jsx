@@ -1,12 +1,18 @@
-import { Navigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Navigate, Outlet } from "react-router-dom"
+import { selectCurrentToken } from "../Features/Auth/AuthSlice"
 
 
-const ProtectedRoute = ({ children }) => {
-    const token = localStorage.token
+const ProtectedRoute = () => {
 
-   
+  let userToken = useSelector(selectCurrentToken)
+    
 
-  return   token ? children : <Navigate to = '/users/sign_up'/>
+    
+
+  return   userToken ? <Outlet/> : <Navigate to = '/auth/users/sign_up' state={{from: location.pathname}} replace/>
+
+  
 }
 
 export default ProtectedRoute

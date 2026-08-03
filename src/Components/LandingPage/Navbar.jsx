@@ -27,20 +27,20 @@ const Navbar = () => {
       <nav>
         <div className="navbar">
           <div className="right-nav">
-            <a href="#">
+            <Link to="/">
               <img className="logo" src={logo} alt="bookshelf" height={36} />
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="/">
               <img className="icon" src={icon} alt="bookshelf" height={36} />
-            </a>
+            </Link>
             <div className="nav-options">
               <div className="discover">
-                <a href="#">
+                <Link to="#">
                   {" "}
                   <span> Discover</span>{" "}
-                </a>
+                </Link>
                 <div className="discover-dropdown">
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#604FCD" }}>
                       <FaLayerGroup />
                     </span>
@@ -48,9 +48,9 @@ const Navbar = () => {
                       <p className="title">Browse by Genre</p>
                       <p className="desc">Find your next read across every category</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#E8590C" }}>
                       <FaArrowTrendUp />
                     </span>
@@ -58,9 +58,9 @@ const Navbar = () => {
                       <p className="title">New & Trending</p>
                       <p className="desc">See what readers are loving right now</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#F0A500" }}>
                       <FaRegStar />
                     </span>
@@ -68,9 +68,9 @@ const Navbar = () => {
                       <p className="title">Staff Picks</p>
                       <p className="desc">Hand-curated favorites from our team</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#2B8A9E" }}>
                       <FaMagnifyingGlass />
                     </span>
@@ -78,16 +78,16 @@ const Navbar = () => {
                       <p className="title">Search Books</p>
                       <p className="desc">Track down any title, author, or topic</p>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="shelves">
-                <a href="#">
+                <Link to="#">
                   {" "}
                   <span> My Shelves</span>{" "}
-                </a>
+                </Link>
                 <div className="shelves-dropdown">
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#6741D9" }}>
                       <FaRegBookmark />
                     </span>
@@ -95,9 +95,9 @@ const Navbar = () => {
                       <p className="title">Want to Read</p>
                       <p className="desc">Your wishlist of books waiting in the wings</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#2F9E44" }}>
                       <FaBookOpen />
                     </span>
@@ -105,9 +105,9 @@ const Navbar = () => {
                       <p className="title">Currently Reading</p>
                       <p className="desc">Pick up right where you left off</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#1971C2" }}>
                       <FaCircleCheck />
                     </span>
@@ -115,9 +115,9 @@ const Navbar = () => {
                       <p className="title">Read</p>
                       <p className="desc">Look back on everything you've finished</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#E8590C" }}>
                       <FaPenToSquare />
                     </span>
@@ -125,9 +125,9 @@ const Navbar = () => {
                       <p className="title">My Reviews</p>
                       <p className="desc">Revisit the thoughts you've shared</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#C2255C" }}>
                       <FaChartSimple />
                     </span>
@@ -135,16 +135,16 @@ const Navbar = () => {
                       <p className="title">My Stats</p>
                       <p className="desc">See your reading habits in numbers</p>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="community">
-                <a href="#">
+                <Link to="#">
                   {" "}
                   <span> Community </span>{" "}
-                </a>
+                </Link>
                 <div className="community-dropdown">
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#1098AD" }}>
                       <FaUserGroup />
                     </span>
@@ -152,9 +152,9 @@ const Navbar = () => {
                       <p className="title">Friend Activity Feed</p>
                       <p className="desc">Keep up with what your friends are reading</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#7048E8" }}>
                       <FaListUl />
                     </span>
@@ -162,9 +162,9 @@ const Navbar = () => {
                       <p className="title">Reading Lists</p>
                       <p className="desc">Explore collections shared by the community</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#F08C00" }}>
                       <FaRegComments />
                     </span>
@@ -172,16 +172,16 @@ const Navbar = () => {
                       <p className="title">Book Reviews</p>
                       <p className="desc">Read honest takes from fellow readers</p>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="more">
-                <a href="#">
+                <Link to="#">
                   {" "}
                   <span> More </span>{" "}
-                </a>
+                </Link>
                 <div className="more-dropdown">
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#4263EB" }}>
                       <FaCircleInfo />
                     </span>
@@ -189,9 +189,9 @@ const Navbar = () => {
                       <p className="title">About Bookshelf</p>
                       <p className="desc">Learn the story behind the shelf</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#212529" }}>
                       <FaGithub />
                     </span>
@@ -199,9 +199,9 @@ const Navbar = () => {
                       <p className="title">Open Source</p>
                       <p className="desc">Peek under the hood and contribute</p>
                     </div>
-                  </a>
+                  </Link>
 
-                  <a href="">
+                  <Link to="">
                     <span className="dd-icon" style={{ color: "#E03131" }}>
                       <FaHeart />
                     </span>
@@ -209,7 +209,7 @@ const Navbar = () => {
                       <p className="title">Donate / Support</p>
                       <p className="desc">Help keep Bookshelf free for everyone</p>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

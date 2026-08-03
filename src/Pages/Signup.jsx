@@ -5,14 +5,16 @@ import authImg from "../assets/files/transparent-authimg.png";
 import logo from "../assets/files/logo-light 1.svg";
 import { Link, useNavigate } from "react-router-dom";
 import googleLogo from "../assets/icons8-google-100.png";
-import axios from "axios";
+
 import MainBtn from "../Components/LandingPage/MainBtn";
+import { useSignUpMutation } from "../Features/Auth/AuthApiSlice";
 const Signup = () => {
   const [message, setMessage] = useState("");
-  const [isError, setisError] = useState(false);
-  const [isLoading, setisLoading] = useState(false);
+
+  const [signup, {isLoading}] = useSignUpMutation()
   const navigate = useNavigate();
-  const url = 'https://bookshelf-backend-pahb.onrender.com/api/v1/users/sign_up'
+
+ const [submitError, setSubmitError] = useState(false)
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -22,32 +24,26 @@ const Signup = () => {
     },
 
     onSubmit: (values) => {
-
+        const {username, email, password} = values
       if (values.password !== values.confirmPassword) {
         setMessage("Passwords do not match");
-        setisError(true);
+        setSubmitError(true);
       } else if (values.password.length < 6) {
         setMessage("Password must be at least 6 characters long");
-        setisError(true);
+       setSubmitError(true);
       } else {
         const saveUser = async () => {
           try {
-            setisLoading(true);
-            // ""
-          await axios.post( url ,values);
-            navigate("/users/login", {
+            await signup({username, email, password}).unwrap()
+            navigate("/auth/users/login", {
               state: { message: "Signup successful. Please log in." },
             });
           } catch (error) {
-            console.log(error.response?.data?.message);
-            
-            setMessage(
-              error.response?.data?.message ||
-                error.message ||
-                "Something went wrong",
-            );
-            setisError(true);
-            setisLoading(false);
+           console.log(error);
+           setSubmitError(true)
+          setMessage(error?.data?.message)
+           
+           
           }
         };
         saveUser();
@@ -57,11 +53,11 @@ const Signup = () => {
 
    const handleGoogleSignIn = () => {
     try {
-      setisLoading(true);
-      window.location.href = 'https://bookshelf-backend-pahb.onrender.com/api/v1/auth/google';
+     
+      window.location.href = 'http://localhost:5000/api/v1/auth/google';
     } catch (error) {
       console.log(error);
-      setisLoading(false);
+      
     }
   };
 
@@ -82,7 +78,7 @@ const Signup = () => {
 
           <form onSubmit={formik.handleSubmit}>
             <div className="message">
-              {isError ? (
+              {submitError ? (
                 <span style={{ color: "red", fontSize: "1.6rem" }}>
                   {message}
                 </span>

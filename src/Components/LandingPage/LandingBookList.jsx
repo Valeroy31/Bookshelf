@@ -1,36 +1,17 @@
-import { useEffect, useState } from "react";
+
 import "../../css/LandingBook.css";
-import axios from "axios";
 import { IoMdStar, IoMdStarOutline, IoMdStarHalf } from "react-icons/io";
 import { ArrowRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import BooksDisplay from "../../Pages/BooksDisplay";
+import { useLandingPageFetchQuery } from "../../Features/Api/OpenLibraryQueries/OpenLibraryApiSlice";
+
 
 const LandingBookList = () => {
-  const [BookList, setBookList] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const{data, isFetching, isSuccess, isError, error} = useLandingPageFetchQuery({fields: 'ratings_average,publisher,first_publish_year,language,author_key,ratings_count,key,isbn,title,author_name,cover_i,description,subjects', page: 4, limit: 14})
+let content;
  const navigate = useNavigate()
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const response = await axios.get(
-        'https://openlibrary.org/search.json?q=new_york_times_nonfiction&offset=50&limit=14&fields=ratings_average,publisher,first_publish_year,language,author_key,ratings_count,key,isbn,title,author_name,cover_i,description,subjects'
-        );
-        setBookList(response.data.docs);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetch();
-  }, []);
-const viewDetails =(book)=>{
-navigate(`/books/${book.isbn[0]}`)
-}
 
-  const renderStars = (rating) => {
+ const renderStars = (rating) => {
     const snapped = Math.round((rating ?? 0) * 2) / 2;
     return [1, 2, 3, 4, 5].map((i) => {
       if (snapped >= i) return <IoMdStar key={i} />;
@@ -38,18 +19,13 @@ navigate(`/books/${book.isbn[0]}`)
       return <IoMdStarOutline key={i} />;
     });
   };
-  return (
-    <section className="trending">
-      <header className="trending__head">
-        <h2 className="trending__title">New York Times Nonfiction < ArrowRightIcon size={16} /> </h2>
-        <span className="trending__note">
-          Updated hourly · activity count, not algorithms
-        </span>
-      </header>
+const viewDetails =(book)=>{
+navigate(`/books/${book.isbn[0]}`)
+}
 
-      <div className="trending__row">
-        {loading
-          ? Array.from({ length: 14 }).map((_, i) => (
+if (isFetching) {
+  content = (
+    Array.from({ length: 14 }).map((_, i) => (
               <article
                 className="book-card book-card--skeleton"
                 key={`skeleton-${i}`}
@@ -63,7 +39,11 @@ navigate(`/books/${book.isbn[0]}`)
                 </div>
               </article>
             ))
-          : BookList.map((book) => (
+  )
+} else if(isSuccess){
+    content = (
+      
+      data.docs.map((book) => (
           <article className="book-card" key={book.key} onClick={()=>viewDetails(book)}>
             <div className="book-card__cover">
               <img
@@ -91,7 +71,29 @@ navigate(`/books/${book.isbn[0]}`)
             </div>
 
           </article>
-        ))}
+    )))  
+}
+else if (isError) {
+  content = ( 
+  <div className="posts-state">
+        <p className="posts-error">Caught error: {error.error}</p>
+        
+      </div> )
+}
+  
+  return (
+
+    <section className="trending">
+      <header className="trending__head">
+      
+        <h2 className="trending__title">New York Times Nonfiction < ArrowRightIcon size={16} /> </h2>
+        <span className="trending__note">
+          Updated hourly · activity count, not algorithms
+        </span>
+      </header>
+
+      <div className="trending__row">
+   {content}
       </div>
     </section>
   );

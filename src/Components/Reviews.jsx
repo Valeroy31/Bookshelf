@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../css/Reviews.css";
 import { IoMdStar } from "react-icons/io";
 import axios from "axios";
+import {useNavigate } from "react-router-dom";
 
 const Reviews = ({ bookId }) => {
   const [reviews, setReviews] = useState({});
@@ -11,25 +12,7 @@ const Reviews = ({ bookId }) => {
   const [hover, setHover] = useState(0);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-
-//   useEffect(() => {
-//     const fetchReviews = async () => {
-//       try {
-//         const response = await axios.get(
-//           `http://localhost:5000/api/v1/reviews/get_reviews`,
-//           {
-//             params: {
-//               bookId: bookId,
-//             },
-//           },
-//         );
-//         setFetchedReviews(response.data);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     };
-//     fetchReviews();
-//   }, [bookId, reviews, fetchedReviews]);
+const navigate = useNavigate()
 
   const closeModal = () => {
     setIsOpen(false);
@@ -64,6 +47,12 @@ const Reviews = ({ bookId }) => {
         setFetchedReviews([...fetchedReviews, response.data]);
       } catch (error) {
         console.log(error);
+        if (error.status === 401) {
+          navigate("/auth/users/login", {
+              state: { message: "You need to sign in or sign up before continuing." },
+            });
+            return;
+        }
       }
     };
     postReview();

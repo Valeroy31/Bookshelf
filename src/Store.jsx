@@ -1,18 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
-import  counterReducer from "./Features/Counter/counterSlice";
 import cartReducer from "./Features/Cart/CartSlice";
 import { apiSlice } from "./Features/Api/apiSlice";
-
+import authReducer from "./Features/Auth/AuthSlice"
+import { OLApi } from "./Features/Api/OlApiSlice";
 export const store = configureStore({
     reducer: {
-        counter: counterReducer,
+       
         cart: cartReducer,
+        auth: authReducer,
+        [OLApi.reducerPath]: OLApi.reducer,
         [apiSlice.reducerPath]: apiSlice.reducer //computed key to
         //compensate for the dynamicity of the reducerPath value
     },
     middleware: getDefaultMiddleware =>
 getDefaultMiddleware()
-        .concat(apiSlice.middleware)
+        .concat(apiSlice.middleware, OLApi.middleware),
+       
     
         
     

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { IoMdStar, IoMdStarOutline, IoMdStarHalf } from "react-icons/io";
 import "../css/BooksDisplay.css";
 import Reviews from "../Components/Reviews";
+import Footer from "../Components/LandingPage/Footer";
 const BooksDisplay = () => {
   const { id } = useParams();
   const [foundBook, setfoundBook] = useState({});
@@ -133,7 +134,7 @@ const BooksDisplay = () => {
 
     </div>
        }
-  
+  <Footer/>
     </>
    
 )};

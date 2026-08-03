@@ -4,16 +4,18 @@ import { useEffect, useState } from "react";
 import authImg from "../assets/files/transparent-authimg.png";
 import logo from "../assets/files/logo-light 1.svg";
 import googleLogo from "../assets/icons8-google-100.png";
-import axios from "axios";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import MainBtn from "../Components/LandingPage/MainBtn";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../Features/Auth/AuthSlice";
+import { useLoginMutation } from "../Features/Auth/AuthApiSlice";
 const Login = () => {
   const location = useLocation(); //imports the state.message passed from Signup.jsx
   const navigate = useNavigate();
-  const url = "https://bookshelf-backend-pahb.onrender.com/api/v1/users/login"
+
+  const dispatch = useDispatch();
   const [message, setMessage] = useState(location.state?.message || "");
-  const [isError, setisError] = useState(false);
-  const [isLoading, setisLoading] = useState(false);
+  const [login, { isLoading, isError }] = useLoginMutation();
 
   useEffect(() => {
     if (location.state?.message) {
@@ -28,30 +30,39 @@ const Login = () => {
 
     onSubmit: (values) => {
       const { username, password } = values;
-        const saveUser = async () => {
-          try {
-            setisLoading(true);
-            const response = await axios.post(url,
-              { username, password },
-            );
-            const token = response.data.token
-            localStorage.token = token
-            setMessage(response.data.message);
-           window.location.href = "/dashboard"
-            
-          } catch (error) {
-            console.log(error.response);
-            
-            setMessage(error.response?.data);
-            setisError(true)
-          } finally {
-            setisLoading(false);
+      const saveUser = async () => {
+        try {
+          const userData = await login({ username, password }).unwrap(); //send to backend for verification
+          console.log(userData);
+          dispatch(setCredentials({ ...userData })); //save recieved accessToken and username to global state
+          navigate("/dashboard");
+          // setMessage(response.data.message);
+        } catch (error) {
+          console.log(error);
+
+          if (!error?.status) {
+            setMessage("No server Response");
+          } else if (error?.status === 400) {
+            setMessage("Invalid Username or Password");
+          } else if (error?.status === 401) {
+            setMessage("Unauthorized");
+          } else {
+            setMessage("Login Failed");
           }
-        };
-        saveUser();
+        }
+      };
+      saveUser();
     },
   });
-
+ const handleGoogleSignIn = () => {
+    try {
+     
+      window.location.href = 'http://localhost:5000/api/v1/auth/google';
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
   return (
     <>
       <div className="all-form">
@@ -62,7 +73,7 @@ const Login = () => {
               <img src={logo} alt="Bookshelf Logo" />
             </a>
             <p>Join us and be a member of the Community</p>
-            <button className="google-signup">
+            <button className="google-signup" onClick={handleGoogleSignIn}>
               <img src={googleLogo} alt="Google Logo" /> Login with Google
             </button>
             <div className="divider">OR</div>
@@ -70,30 +81,30 @@ const Login = () => {
 
           <form action="">
             <div className="message">
- {isError || message == "You need to sign in or sign up before continuing." ? (
-              <span
-                style={{
-                  color: "red",
-                  fontSize: "1.4rem",
-                  paddingBottom: "1rem",
-                }}
-              >
-                {message}
-              </span>
-            ) : (
-              <span
-                style={{
-                  color: "green",
-                  fontSize: "1.4rem",
-                  paddingBottom: "1rem",
-                }}
-              >
-                {message}
-              </span>
-            )}
-
+              {isError ||
+                message == "You need to sign in or sign up before continuing." ? (
+                <span
+                  style={{
+                    color: "red",
+                    fontSize: "1.4rem",
+                    paddingBottom: "1rem",
+                  }}
+                >
+                  {message}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    color: "green",
+                    fontSize: "1.4rem",
+                    paddingBottom: "1rem",
+                  }}
+                >
+                  {message}
+                </span>
+              )}
             </div>
-           
+
             <div className="form-field">
               <span>
                 {" "}
@@ -140,7 +151,7 @@ const Login = () => {
           <div className="cta">
             <p>
               Don't have an account yet?{" "}
-              <Link to= '/auth/users/sign_up'>Sign up for free</Link>
+              <Link to="/auth/users/sign_up">Sign up for free</Link>
             </p>
             <p>
               Didn't receive a confirmation email?{" "}

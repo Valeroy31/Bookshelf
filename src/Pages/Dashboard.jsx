@@ -1,62 +1,33 @@
-import axios from "axios";
-import { useContext, useState } from "react";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { ThemeContext } from "../Components/ThemeContext";
+import { useDispatch, useSelector } from "react-redux"
+import { selectCurrentUser, stateLogOut } from "../Features/Auth/AuthSlice"
+import { useLogOutMutation } from "../Features/Auth/AuthApiSlice"
+import Navbar from "../Components/LandingPage/Navbar"
+
 
 const Dashboard = () => {
-  const [User, setUser] = useState("");
-  const { theme, setTheme} = useContext(ThemeContext);
-  const textTheme = theme === 'powderblue' ? 'black' : 'white'
-  const navigate = useNavigate();
-  let token = localStorage.token;
-  useEffect(() => {
-    const validateToken = async () => {
-      try {
-        const response = await axios.get(
-          "https://bookshelf-backend-pahb.onrender.com/api/v1/users/dashboard",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          },
-        );
-        setUser(response.data.username);
-      } catch (error) {
-        navigate("/auth/users/login", {
-          state: {
-            message: "You need to sign in or sign up before continuing.",
-          },
-        });
-        console.log(error);
-      }
-    };
-
-    validateToken();
-  }, []);
-
-  const handleLogout = async () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-  const ThemeChange = () => {
-    setTheme(theme === "#604FCD" ? "powderblue" : "#604FCD");
+  const user = useSelector(selectCurrentUser)
+  const [logOut] = useLogOutMutation()
+const dispatch = useDispatch()
   
-  };
-
-  
+  const logout =async()=>{
+   try {
+      await logOut().unwrap()
+     dispatch(stateLogOut())
+   } catch (error) {
+      console.log(error);
+      
+   }
+  }
   return (
     <>
-      <div style={{ backgroundColor: theme, color: textTheme }}>
-        <button onClick={ThemeChange}>Theme is {theme}</button>
-
-        <h1>Welcome {User}!</h1>
-        <button onClick={handleLogout}>Logout</button>
-      </div>
+    <header>
+      <Navbar/>
+    </header>
+    <h1>Welcome {user}</h1>
+    <button onClick={logout}>Logout</button>
+    
     </>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

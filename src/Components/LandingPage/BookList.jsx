@@ -1,45 +1,18 @@
-import { useEffect, useState } from "react";
 import "../../css/LandingBook.css";
-import axios from "axios";
 import { IoMdStar, IoMdStarOutline, IoMdStarHalf } from "react-icons/io";
 import { ArrowRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLandingPageFetchTwoQuery } from "../../Features/Api/OpenLibraryQueries/OpenLibraryApiSlice";
 
 const BookList = () => {
-  const [BookList, setBookList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-     const response = await axios.get("https://openlibrary.org/search.json", {
-  params: {
-    q: 'subject:business AND first_publish_year:[2015 TO 2024]',
-    // sort: "new",      
-    fields: "key,title,author_name,subjects, description,first_publish_year,language,isbn,cover_i,pages,ratings_average,ratings_count",
-    limit: '300',
-    offset: '50'
-  },
-});
-
-const withCovers = response.data.docs.filter((book) => book.cover_i);
-setBookList(withCovers.slice(0, 14));
-console.log(withCovers);
+  const {data, isFetching, isSuccess, error, isError} = useLandingPageFetchTwoQuery({fields: "key,title,author_name,subjects, description,first_publish_year,language,isbn,cover_i,pages,ratings_average,ratings_count",
+    limit: 14,
+    page: 4})
 
 
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetch();
-  }, []);
-const viewDetails =(book)=>{
-navigate(`/books/${book.isbn[0]}`)
-}
- const renderRating = (rating) => {
+    let content;
+const renderRating = (rating) => {
     const snapped = Math.round((rating ?? 0) * 2) / 2;
     return [1, 2, 3, 4, 5].map((i) => {
       if (snapped >= i) return <IoMdStar key={i} />;
@@ -47,18 +20,9 @@ navigate(`/books/${book.isbn[0]}`)
       return <IoMdStarOutline key={i} />;
     });
   };
-  return (
-    <section className="trending">
-      <header className="trending__head">
-        <h2 className="trending__title">Business & Finance < ArrowRightIcon size={16} /> </h2>
-        <span className="trending__note">
-          Updated hourly · activity count, not algorithms
-        </span>
-      </header>
-
-      <div className="trending__row">
-        {loading
-          ? Array.from({ length: 14 }).map((_, i) => (
+    if(isFetching){
+      content = (
+         Array.from(  { length: 14 },(_, i) => (
               <article
                 className="book-card book-card--skeleton"
                 key={`skeleton-${i}`}
@@ -71,8 +35,13 @@ navigate(`/books/${book.isbn[0]}`)
                   <div className="skeleton skeleton-line skeleton-line--rating"></div>
                 </div>
               </article>
-            ))
-          : BookList.map((book) => (
+            
+      ))
+      )
+    }
+    else if(isSuccess){
+      content = (
+ data.docs.map((book) => (
           <article onClick={()=>viewDetails(book)} className="book-card" key={book.key}>
             <div className="book-card__cover">
               <img
@@ -102,7 +71,38 @@ navigate(`/books/${book.isbn[0]}`)
             </div>
            
           </article>
-        ))}
+        ))
+      )
+    }
+    else if(isError){
+         content = (
+            <div className="posts-state">
+        <p className="posts-error">Caught error: {error.error}</p>
+        
+      </div>
+    );
+    }
+
+
+
+
+     
+  
+const viewDetails =(book)=>{
+navigate(`/books/${book.isbn[0]}`)
+}
+ 
+  return (
+    <section className="trending">
+      <header className="trending__head">
+        <h2 className="trending__title">Business & Finance < ArrowRightIcon size={16} /> </h2>
+        <span className="trending__note">
+          Updated hourly · activity count, not algorithms
+        </span>
+      </header>
+
+      <div className="trending__row">
+        {content}
       </div>
     </section>
   );

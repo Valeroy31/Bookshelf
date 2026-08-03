@@ -3,7 +3,6 @@ import LandingPage from "./Pages/LandingPage";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
-import Counter from "./Features/Counter/Counter";
 import PostList from "./Features/Posts/PostList";
 import CardsDisplay from "./Pages/CardsDisplay";
 import Params from "./Pages/Params";
@@ -16,6 +15,8 @@ import FullPostPage from "./Features/Posts/FullPostPage";
 import EditPostForm from "./Features/Posts/EditPostForm";
 import AllUsers from "./Features/Users/AllUsers";
 import UserPage from "./Features/Users/UserPage";
+import PersistLogin from "./Components/PersistLogin";
+import Search from "./Pages/Search";
 
 const App = () => {
   return (
@@ -28,28 +29,22 @@ const App = () => {
           <Route path="users/login" element={<Login />} />
           <Route path="/auth/callback" element={<Callback />} />
         </Route>
-
-        <Route path="/counter" element={<Counter />} />
-
-        <Route path="posts" element={<PostList />}>
-          <Route path="/postAuthors" element={<AllUsers />} />
-          <Route path="/users/:id" element={<UserPage />} />
-          <Route path="/posts/addPost" element={<AddPostForm />} />
-          <Route path="posts/:id" element={<FullPostPage />} />
-          <Route path="editPost/:id" element={<EditPostForm />} />
+        <Route path="/posts" element={<PostList />} />
+        <Route path="/postAuthors" element={<AllUsers />} />
+        <Route path="/author/:id" element={<UserPage />} />
+        <Route path="/posts/addPost" element={<AddPostForm />} />
+        <Route path="/posts/:id" element={<FullPostPage />} />
+        <Route path="/editPost/:id" element={<EditPostForm />} />
+          <Route element={<PersistLogin/>}>
+<Route element={<ProtectedRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+          </Route>
+        
 
         <Route path="/card/:id" element={<CardsDisplay />} />
         <Route path="/books/:id" element={<BooksDisplay />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/params" element={<Params />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
