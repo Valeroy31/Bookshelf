@@ -27,7 +27,19 @@ export const openLibraryExtendedApi = OLApi.injectEndpoints({
         },
       }),
     }),
+
+    bookSearchResult: builder.query({
+      query: ({ searchQuery, fields }) => ({
+        url: '',
+        method: "GET",
+        params: {
+          q: `${searchQuery}`,
+          fields
+        }
+      }),
+      keepUnusedDataFor: 300
+    }),
   }),
 });
 
-export const { useLandingPageFetchQuery, useLandingPageFetchTwoQuery } = openLibraryExtendedApi;
+export const { useLandingPageFetchQuery, useLandingPageFetchTwoQuery, useBookSearchResultQuery } = openLibraryExtendedApi;

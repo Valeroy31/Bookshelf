@@ -99,7 +99,6 @@ img {
   box-shadow: #b9c7ee 0px 4px 8px;
 }
 .google-signup :disabled, :disabled:hover {
-  background-color: rgba(255, 255, 255, 0.438);
    cursor: not-allowed;
 }
 .google-signup img {

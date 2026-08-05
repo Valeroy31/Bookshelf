@@ -70,7 +70,7 @@ const Navbar = () => {
                     </div>
                   </Link>
 
-                  <Link to="">
+                  <Link to="/search">
                     <span className="dd-icon" style={{ color: "#2B8A9E" }}>
                       <FaMagnifyingGlass />
                     </span>
@@ -216,12 +216,12 @@ const Navbar = () => {
           </div>
 
           <div className="left-nav">
-            <Link to="auth/users/sign_up">
+            <a href="auth/users/sign_up">
               <button className="btn-signup">Sign up</button>{" "}
-            </Link>
-            <Link to="auth/users/login">
+            </a>
+            <a href="auth/users/login">
               <button className="btn-login"> Log in</button>{" "}
-            </Link>
+            </a>
             <button className="btn-explore">
               {" "}
               <div className="explore">

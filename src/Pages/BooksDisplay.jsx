@@ -131,10 +131,11 @@ const BooksDisplay = () => {
       <section>
         <Reviews bookId = {id}/>
       </section>
-
+<Footer/>
     </div>
+     
        }
-  <Footer/>
+ 
     </>
    
 )};
