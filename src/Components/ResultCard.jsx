@@ -55,7 +55,9 @@ const ResultCard = ({ book }) => {
                      </span>
         </div>
 
-        <p className="result-card__blurb">{book.description}</p>
+        <p className="result-card__blurb">{book.description?.substring(0, 400) ?? 'No description available'}
+          {book.description?.length > 400 && '...'}
+        </p>
 
         <ul className="result-card__tags">
           {book.subject?.map((tag) => (

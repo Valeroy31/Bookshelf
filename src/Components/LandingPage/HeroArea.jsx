@@ -20,7 +20,7 @@ const HeroArea = () => {
     </div>
 
     <div className="cta-btn">
-     <Link to='auth/users/sign_up'> <button  className='free-btn'>Sign up for free</button> </Link> 
+     <Link to='/auth/users/sign_up'> <button  className='free-btn'>Sign up for free</button> </Link> 
      <Link to='/collections'><button className='browse-btn'>Browse books</button></Link>  
     </div>
 

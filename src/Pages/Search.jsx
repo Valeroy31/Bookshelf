@@ -1,11 +1,11 @@
 import "../css/Search.css";
-import Navbar from "../Components/LandingPage/Navbar";
 import ResultCard from "../Components/ResultCard";
 import { useState } from "react";
 import { SearchIcon } from "lucide-react";
-import { useBookSearchResultQuery } from "../Features/Api/OpenLibraryQueries/OpenLibraryApiSlice";
+import { useBookSearchResultQuery } from "../Features/Api/bookFetchQueries/OpenLibraryApiSlice";
 import { useSearchParams } from "react-router-dom";
 
+import Navbar from '../Components/LandingPage/Navbar'
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams()
@@ -41,9 +41,9 @@ const setUrl =(e)=>{
 
   return (
     <>
-      <Navbar />
-
-      <div className="all-search">
+    
+   <Navbar/>
+          <div className="all-search">
         <div className="search-bg">
           <form onSubmit={(e)=>setUrl(e)}>
             <div className="search-container">
@@ -71,7 +71,6 @@ const setUrl =(e)=>{
               </div>
             </div>
           </form>
-
           {reference}
         </div>
       </div>

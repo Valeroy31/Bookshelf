@@ -3,7 +3,7 @@ import "../../css/LandingBook.css";
 import { IoMdStar, IoMdStarOutline, IoMdStarHalf } from "react-icons/io";
 import { ArrowRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useLandingPageFetchQuery } from "../../Features/Api/OpenLibraryQueries/OpenLibraryApiSlice";
+import { useLandingPageFetchQuery } from "../../Features/Api/bookFetchQueries/OpenLibraryApiSlice";
 
 
 const LandingBookList = () => {

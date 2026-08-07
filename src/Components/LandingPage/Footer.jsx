@@ -30,7 +30,7 @@ const Footer = () => {
           <p className="footer-cta__sub">
             Free forever. No ads. No tracking. Just books.
           </p>
-          <Link to="auth/users/sign_up">
+          <Link to="/auth/users/sign_up">
             <button className="footer-cta__btn">Create your free shelf</button>
           </Link>
         </div>

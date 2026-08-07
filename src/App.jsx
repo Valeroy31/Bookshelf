@@ -1,4 +1,8 @@
-import { Route, Routes } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router-dom";
 import LandingPage from "./Pages/LandingPage";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
@@ -17,39 +21,37 @@ import AllUsers from "./Features/Users/AllUsers";
 import UserPage from "./Features/Users/UserPage";
 import PersistLogin from "./Components/PersistLogin";
 import Search from "./Pages/Search";
+import Layout from "./Layout";
 
-const App = () => {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route index element={<LandingPage />} />
 
-        <Route path="/auth">
-          <Route path="users/sign_up" element={<Signup />} />
-          <Route path="users/login" element={<Login />} />
-          <Route path="/auth/callback" element={<Callback />} />
-        </Route>
-        <Route path="/posts" element={<PostList />} />
-        <Route path="/postAuthors" element={<AllUsers />} />
-        <Route path="/author/:id" element={<UserPage />} />
-        <Route path="/posts/addPost" element={<AddPostForm />} />
-        <Route path="/posts/:id" element={<FullPostPage />} />
-        <Route path="/editPost/:id" element={<EditPostForm />} />
-          <Route element={<PersistLogin/>}>
-<Route element={<ProtectedRoute />}>
+      <Route path="/auth">
+        <Route path="users/sign_up" element={<Signup />} />
+        <Route path="users/login" element={<Login />} />
+        <Route path="/auth/callback" element={<Callback />} />
+      </Route>
+      <Route path="/posts" element={<PostList />} />
+      <Route path="/postAuthors" element={<AllUsers />} />
+      <Route path="/author/:id" element={<UserPage />} />
+      <Route path="/posts/addPost" element={<AddPostForm />} />
+      <Route path="/posts/:id" element={<FullPostPage />} />
+      <Route path="/editPost/:id" element={<EditPostForm />} />
+      <Route element={<PersistLogin />}>
+        <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-          </Route>
-        
+      </Route>
 
-        <Route path="/card/:id" element={<CardsDisplay />} />
-        <Route path="/books/:id" element={<BooksDisplay />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/params" element={<Params />} />
-        <Route path="/cart" element={<Cart />} />
-      </Routes>
-    </>
-  );
-};
+      <Route path="/card/:id" element={<CardsDisplay />} />
+      <Route path="/books/:id" element={<BooksDisplay />} />
+      <Route path="/search" element={<Search />} />
+      <Route path="/params" element={<Params />} />
+      <Route path="/cart" element={<Cart />} />
+    </Route>
+  )
+);
 
-export default App;
+export default router;

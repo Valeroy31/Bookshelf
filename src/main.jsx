@@ -1,25 +1,24 @@
 
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 import './css/index.css'
-import App from './App.jsx'
+import router from './App.jsx'
 import { store } from './Store.jsx'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from './Components/ThemeContext.jsx'
 import { extendedApiUserSlice } from './Features/Users/UserSlice.js'
 import { extendedApiSlice } from './Features/Posts/postSlice.js'
+import { StrictMode } from 'react'
 
 store.dispatch(extendedApiUserSlice.endpoints.getUsers.initiate())
 store.dispatch(extendedApiSlice.endpoints.getPosts.initiate())
 
 createRoot(document.getElementById('root')).render(
-
-    <BrowserRouter>
+<StrictMode>
     <Provider store={store}>
       <ThemeProvider>
- <App />
+        <RouterProvider router={router} />
       </ThemeProvider>
     </Provider>
-   
-    </BrowserRouter>
+</StrictMode>
 )

@@ -58,15 +58,24 @@
   justify-content: space-evenly;
   gap: 4rem;
 }
-
+.btn-link{
+  background: none;
+  border: none;
+  color: var(--color-primary-deep);
+  font-size: 1.4rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
 .image-div {
    background: var( --color-bg-soft); 
-   height: 450px;
+   aspect-ratio: 1/1.5;
+   height: auto;
   max-width: 700px;
   width: 300px;
 }
 .image-div img {
   width: inherit;
+  height: fit-content;
 }
 .book__details .tiny {
   font-size: 1.3rem;

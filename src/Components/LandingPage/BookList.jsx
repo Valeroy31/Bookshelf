@@ -2,7 +2,7 @@ import "../../css/LandingBook.css";
 import { IoMdStar, IoMdStarOutline, IoMdStarHalf } from "react-icons/io";
 import { ArrowRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useLandingPageFetchTwoQuery } from "../../Features/Api/OpenLibraryQueries/OpenLibraryApiSlice";
+import { useLandingPageFetchTwoQuery } from "../../Features/Api/bookFetchQueries/OpenLibraryApiSlice";
 
 const BookList = () => {
   const navigate = useNavigate()

@@ -71,7 +71,7 @@ small{
 }
 .header span{
     padding-bottom: .2rem;
-    background-image: url('../../assets/files/underline-stroke.svg');
+    background-image: url('../assets/files/underline-stroke.svg');
     background-repeat: no-repeat;
     background-position: bottom;
     

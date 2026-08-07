@@ -216,12 +216,12 @@ const Navbar = () => {
           </div>
 
           <div className="left-nav">
-            <a href="auth/users/sign_up">
+            <Link to="/auth/users/sign_up">
               <button className="btn-signup">Sign up</button>{" "}
-            </a>
-            <a href="auth/users/login">
+            </Link>
+            <Link to="/auth/users/login">
               <button className="btn-login"> Log in</button>{" "}
-            </a>
+            </Link>
             <button className="btn-explore">
               {" "}
               <div className="explore">

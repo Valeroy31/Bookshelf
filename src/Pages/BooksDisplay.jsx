@@ -5,11 +5,12 @@ import { useParams } from "react-router-dom";
 import { IoMdStar, IoMdStarOutline, IoMdStarHalf } from "react-icons/io";
 import "../css/BooksDisplay.css";
 import Reviews from "../Components/Reviews";
-import Footer from "../Components/LandingPage/Footer";
+import Navbar from "../Components/LandingPage/Navbar";
 const BooksDisplay = () => {
   const { id } = useParams();
   const [foundBook, setfoundBook] = useState({});
   const [isLoading, setisLoading] = useState(true);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -39,6 +40,7 @@ const BooksDisplay = () => {
 
   return (
     <>
+   <header> <Navbar/></header>
        {isLoading ? 
           <div className="loader-2"></div>
          : 
@@ -115,9 +117,30 @@ const BooksDisplay = () => {
             <div className="book__description">
               <h2>Book Description</h2>
               {foundBook.description ? (
-                <>
-                  {foundBook.description.substring(0, 400)}...
-                </>
+                <p>
+                  {showFullDescription
+                    ? foundBook.description
+                    : foundBook.description.substring(0, 400)}
+                  {!showFullDescription && foundBook.description.length > 400 && (
+                    <>
+                      ...
+                      <button
+                        className="btn-link"
+                        onClick={() => setShowFullDescription(true)}
+                      >
+                        see more
+                      </button>
+                    </>
+                  )}
+                  {showFullDescription && (
+                    <button
+                      className="btn-link"
+                      onClick={() => setShowFullDescription(false)}
+                    >
+                      show less
+                    </button>
+                  )}
+                </p>
               ) : (
                 <p>No description provided</p>
               )}
@@ -131,7 +154,7 @@ const BooksDisplay = () => {
       <section>
         <Reviews bookId = {id}/>
       </section>
-<Footer/>
+
     </div>
      
        }
