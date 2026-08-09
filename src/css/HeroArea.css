@@ -190,20 +190,20 @@ margin: auto;
 .cta-btn{
   flex-direction: column;
 }
-.free-btn{
+.cta-btn .free-btn{
   width: 100%;
   text-wrap: nowrap;
 }
-.browse-btn{
+.cta-btn .browse-btn{
   width: 100%;
   text-wrap: nowrap;
 }
-.browse-btn:hover {
+.cta-btn .browse-btn:hover {
   padding: 1em 16.25em;
 
-  
+
 }
-.free-btn:hover{
+.cta-btn .free-btn:hover{
   padding: 1em 16em;
 }
 .info-strip{

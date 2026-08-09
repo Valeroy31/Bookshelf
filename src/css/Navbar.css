@@ -303,8 +303,11 @@
   display: flex;
   align-items: center;
 }
+  /* labels are hidden at this width, so the (absolutely positioned) dropdown
+     panels are unreachable — but they still stretch the document's scroll
+     width. Take the whole group out of layout instead of just the labels. */
   .nav-options{
-    gap: 0;
+    display: none;
   }
 .right-nav span{
   display: none;

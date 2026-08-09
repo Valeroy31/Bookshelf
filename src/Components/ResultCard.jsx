@@ -51,7 +51,7 @@ const ResultCard = ({ book }) => {
           <span className="result-card__stars">{renderStars(book.ratings_average)}</span>
           <span className="result-card__score">{book.ratings_average?.toFixed(1)}</span>
           <span className="result-card__count">
-            {book.ratings_count?.toLocaleString() > 0 ? book.ratings_count?.toLocaleString() : 'No'} ratings
+            {book.ratings_count > 0 ? book.ratings_count?.toLocaleString() : 'No'} ratings
                      </span>
         </div>
 
